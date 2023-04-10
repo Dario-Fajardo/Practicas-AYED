@@ -119,79 +119,77 @@ bool SllPolynomial::IsEqual(const SllPolynomial& sllpol,
 
 // FASE IV
 // Generar nuevo polinomio suma del polinomio invocante mas otro polinomio
-void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, const double eps) {
-  SllPolyNode* aux{get_head()};
-  SllPolyNode* aux2{sllpol.get_head()};
-  int tam = 0, tam2 = 0;
+void SllPolynomial::Sum(const SllPolynomial& sllpol,
+			SllPolynomial& sllpolsum,
+			const double eps) {
+  // poner el código aquí
+  SllPolynomial auxSllPolSum;             // Polinomio auxiliar para la suma
+  SllPolyNode* auxiliar = get_head();          // TÃ©rmino del polinomio 1
+  SllPolyNode* auxiliar2 = sllpol.get_head();  // TÃ©rmino del polinomio 2
+  pair_double_t pareja;                     // Par de nÃºmeros para crear nodo suma
+  double sum = 0.0;                       // Variable para almacenar la suma
 
-  while (aux != NULL){
-    tam++;
-    aux = aux->get_next();
-  }
-  while (aux2 != NULL){
-    tam2++;
-    aux2 = aux2->get_next();
-  }
-  aux = get_head();
-  aux2 = sllpol.get_head();
-  if (tam == tam2){        
-    for (int i = 0; i < tam; ++i){
-      sllpolsum.push_front(new SllPolyNode(pair_double_t(aux->get_data().get_val()+aux2->get_data().get_val(),aux->get_data().get_inx())));
-      aux = aux->get_next();
-      aux2 = aux2->get_next();
-    }  
-  } else if ( tam < tam2){
-      for (int i = 0; i < tam2; i++){
-        if (aux != NULL && aux2 != NULL){     
-          if (IsNotZero(aux->get_data().get_val() + aux2->get_data().get_val(), eps)){
-            sllpolsum.push_front(new SllPolyNode(pair_double_t(aux->get_data().get_val()+aux2->get_data().get_val(),aux->get_data().get_inx())));
-            aux = aux->get_next();
-            aux2 = aux2->get_next();
-
-          }else if (aux->get_data().get_inx() < aux2->get_data().get_inx()){
-            sllpolsum.push_front(new SllPolyNode(pair_double_t(aux2->get_data().get_val(),aux2->get_data().get_inx())));
-            aux2 = aux2->get_next();
-
-          }else if (aux->get_data().get_inx() > aux2->get_data().get_inx()){
-            sllpolsum.push_front(new SllPolyNode(pair_double_t(aux->get_data().get_val(),aux->get_data().get_inx())));
-            aux = aux->get_next();
-          }  
-
-        }else if (aux != NULL && aux2 == NULL){
-          sllpolsum.push_front(new SllPolyNode(pair_double_t(aux->get_data().get_val(),aux->get_data().get_inx())));
-          aux = aux->get_next();
-        }else if (aux == NULL && aux2 != NULL){
-          sllpolsum.push_front(new SllPolyNode(pair_double_t(aux2->get_data().get_val(),aux2->get_data().get_inx())));
-          aux2 = aux2->get_next();
+//si tienen los mismos exponentes se suman
+  while (auxiliar != NULL || auxiliar2 != NULL) {
+    if (auxiliar != NULL && auxiliar2 != NULL) {
+      if (auxiliar->get_data().get_inx() == auxiliar2->get_data().get_inx()) {
+        sum = auxiliar->get_data().get_val() + auxiliar2->get_data().get_val();
+        if (IsNotZero(sum, eps)) {
+          pareja.set(sum, auxiliar->get_data().get_inx());
+          auxSllPolSum.push_front(new SllPolyNode (pareja));
         }
-      }
-  } else {
-      for (int i = 0; i < tam; i++){
-        if (aux != NULL && aux2 != NULL){
-          if (IsNotZero(aux->get_data().get_val() + aux2->get_data().get_val(), eps)){
-            sllpolsum.push_front(new SllPolyNode(pair_double_t(aux->get_data().get_val()+aux2->get_data().get_val(),aux->get_data().get_inx())));
-            aux = aux->get_next();
-            aux2 = aux2->get_next();
-
-          }else if (aux->get_data().get_inx() < aux2->get_data().get_inx()){
-            sllpolsum.push_front(new SllPolyNode(pair_double_t(aux2->get_data().get_val(),aux2->get_data().get_inx())));
-            aux2 = aux2->get_next();
-
-          }else if (aux->get_data().get_inx() > aux2->get_data().get_inx()){
-            sllpolsum.push_front(new SllPolyNode(pair_double_t(aux->get_data().get_val(),aux->get_data().get_inx())));
-            aux = aux->get_next();
-          }  
-
-        }else if (aux != NULL && aux2 == NULL){
-          sllpolsum.push_front(new SllPolyNode(pair_double_t(aux->get_data().get_val(),aux->get_data().get_inx())));
-          aux = aux->get_next();
-        }else if (aux == NULL && aux2 != NULL){
-          sllpolsum.push_front(new SllPolyNode(pair_double_t(aux2->get_data().get_val(),aux2->get_data().get_inx())));
-          aux2 = aux2->get_next();
+        if (auxiliar != NULL)
+          auxiliar = auxiliar->get_next();
+        if (auxiliar2 != NULL)
+          auxiliar2 = auxiliar2->get_next();
+//si el indice del primer polinomio es mayor se suma solo el segundo aux
+      } else if (auxiliar->get_data().get_inx() > auxiliar2->get_data().get_inx()) {
+        sum = auxiliar2->get_data().get_val();
+        if (IsNotZero(sum, eps)) {
+          pareja.set(sum, auxiliar2->get_data().get_inx());
+          auxSllPolSum.push_front(new SllPolyNode (pareja));
         }
+        if (auxiliar2 != NULL)
+          auxiliar2 = auxiliar2->get_next();
+      } else {
+        sum = auxiliar->get_data().get_val();
+        if (IsNotZero(sum, eps)) {
+          pareja.set(sum, auxiliar->get_data().get_inx());
+          auxSllPolSum.push_front(new SllPolyNode (pareja));
+        }
+
+        // Siempre que no estemos al final de la lista, apuntamos al next nodo
+        // del pol que tenÃ­a el menor Ã­ndice para asÃ­ intentar llegar al mismo
+        // Ã­ndice que el otro pol.
+        if (auxiliar != NULL)
+          auxiliar = auxiliar->get_next();
       }
+
+      //Si uno llego al final
+    } else if (auxiliar == NULL) {
+      sum = auxiliar2->get_data().get_val();
+      if (IsNotZero(sum, eps)) {
+        pareja.set(sum, auxiliar2->get_data().get_inx());
+        auxSllPolSum.push_front(new SllPolyNode (pareja));
+      }
+      if (auxiliar2 != NULL)
+        auxiliar2 = auxiliar2->get_next();
+
+    } else if (auxiliar2 == NULL) {
+      sum = auxiliar->get_data().get_val();
+      if (IsNotZero(sum, eps)) {
+        pareja.set(sum, auxiliar2->get_data().get_inx());
+        auxSllPolSum.push_front(new SllPolyNode (pareja));
+      }
+
+      if (auxiliar != NULL)
+        auxiliar = auxiliar->get_next();
+    }
   }
-  sllpolsum.reverse();
-} 
+
+  while (!auxSllPolSum.empty()) {
+    sllpolsum.push_front(auxSllPolSum.pop_front());
+  }
+}
 
 #endif  // SLLPOLYNOMIAL_H_
