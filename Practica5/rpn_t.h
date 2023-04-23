@@ -1,9 +1,9 @@
-// AUTOR: 
-// FECHA: 
-// EMAIL: 
+// AUTOR: Darío Fajardo Álvarez
+// FECHA: 23/04/2023
+// EMAIL: alu0101564630@ull.edu.es
 // VERSION: 2.0
 // ASIGNATURA: Algoritmos y Estructuras de Datos
-// PRÁCTICA Nº: 5
+// TEMA: 4
 // ESTILO: Google C++ Style Guide
 // COMENTARIOS: Clase RPN (Reverse Polish Notation)
 
@@ -45,35 +45,67 @@ template<class T> const int rpn_t<T>::evaluate(queue_l_t<char>& q) {
 
     if (isdigit(c)) {
       int i = c - '0';
-      // poner código
+      stack_.push(i);
       std::cout << " (es un dígito) " << std::endl
 		<< "   Lo metemos en la pila..." << std::endl;
     } else {
       std::cout << " (es un operador)" << std::endl;
-      // poner código
+      operate_(c);
     }
   }
-  // poner código
+  return stack_.top();
 }
 
 template<class T> void rpn_t<T>::operate_(const char c) {
-  assert(c == '+' || c == '-' || c == '*' || c == '/');
+  assert(c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == 'r' || c == 'l' || c == 'c');
+  int operando1;
+  int operando2;
 
-  // poner código
-  std::cout << "   Sacamos de la pila un operando: " << std::endl;
+  if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+    operando1 = stack_.top();
+    stack_.pop();
+    std::cout << "   Sacamos de la pila un operando: " << operando1 << std::endl;
   
-  // poner código
-  std::cout << "   Sacamos de la pila otro operando: " << std::endl;
-  
+    operando2 = stack_.top();
+    stack_.pop();
+    std::cout << "   Sacamos de la pila otro operando: " << operando2 << std::endl;
+  } else if (c == 'r' || c == 'l' || c == 'c') {
+    operando1 = stack_.top();
+    stack_.pop();
+    std::cout << "   Sacamos de la pila un operando: " << operando1 << std::endl;
+  }
   switch (c) {
     case '+':
-      // poner código
+      stack_.push(operando1 + operando2);
       break;
-    // poner código resto de operadores
+    case '-':
+      stack_.push(operando2 - operando1);
+      break;
+    case '*':
+      stack_.push(operando1 * operando2);
+      break;
+    case '/':
+      assert(operando2 != 0);
+      if (operando1 > operando2) {
+        stack_.push(operando1 / operando2);
+      } else {
+        stack_.push(operando2 / operando1);
+      }
+      break;
+    case '^':
+      stack_.push(pow(operando1, operando2));
+      break;
+    case 'r':
+      stack_.push(sqrt(operando1));
+      break;
+    case 'l':
+      stack_.push(log2(operando1));
+      break;
+    case 'c':
+      stack_.push(operando1 * operando1);
+      break;
   }
-
-  // poner código
-  std::cout << "   Metemos en la pila el resultado: " << std::endl;
+  std::cout << "   Metemos en la pila el resultado: " << stack_.top() << std::endl;
 }
 
  

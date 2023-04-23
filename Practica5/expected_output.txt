@@ -1,0 +1,28 @@
+Expresión a evaluar: - 3 + * 4 + 2 1 5 
+Sacamos de la cola un carácter: 5 (es un dígito) 
+   Lo metemos en la pila...
+Sacamos de la cola un carácter: 1 (es un dígito) 
+   Lo metemos en la pila...
+Sacamos de la cola un carácter: 2 (es un dígito) 
+   Lo metemos en la pila...
+Sacamos de la cola un carácter: + (es un operador)
+   Sacamos de la pila un operando: 2
+   Sacamos de la pila otro operando: 1
+   Metemos en la pila el resultado: 3
+Sacamos de la cola un carácter: 4 (es un dígito) 
+   Lo metemos en la pila...
+Sacamos de la cola un carácter: * (es un operador)
+   Sacamos de la pila un operando: 4
+   Sacamos de la pila otro operando: 3
+   Metemos en la pila el resultado: 12
+Sacamos de la cola un carácter: + (es un operador)
+   Sacamos de la pila un operando: 12
+   Sacamos de la pila otro operando: 5
+   Metemos en la pila el resultado: 17
+Sacamos de la cola un carácter: 3 (es un dígito) 
+   Lo metemos en la pila...
+Sacamos de la cola un carácter: - (es un operador)
+   Sacamos de la pila un operando: 3
+   Sacamos de la pila otro operando: 17
+   Metemos en la pila el resultado: 14
+Resultado: 14

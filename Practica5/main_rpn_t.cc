@@ -1,9 +1,9 @@
-// AUTOR: 
-// FECHA: 
-// EMAIL: 
+// AUTOR: Darío Fajardo Álvarez
+// FECHA: 23/04/2023
+// EMAIL: alu0101564630@ull.edu.es
 // VERSION: 2.0
 // ASIGNATURA: Algoritmos y Estructuras de Datos
-// PRÁCTICA Nº: 5
+// TEMA: 4
 // ESTILO: Google C++ Style Guide
 // COMENTARIOS: Programa principal para probar la calculadora de expresiones 
 //              en notaión polaca inversa (RPN, Reverse Polish Notation)
@@ -12,9 +12,6 @@
 //   ./main_rpn_t < data_rpn_t_1.txt
 //   ./main_rpn_t < data_rpn_t_2.txt
 //   ./main_rpn_t < data_rpn_t_3.txt
-
-// Compilar con:
-// 
 
 #include <iostream>
 

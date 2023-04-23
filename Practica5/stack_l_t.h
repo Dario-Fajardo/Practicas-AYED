@@ -1,11 +1,10 @@
-// AUTOR: 
-// FECHA: 
-// EMAIL: 
+// AUTOR: Darío Fajardo Álvarez
+// FECHA: 23/04/2023
+// EMAIL: alu0101564630@ull.edu.es
 // VERSION: 2.0
 // ASIGNATURA: Algoritmos y Estructuras de Datos
-// TEMA: 5
+// TEMA: 4
 // ESTILO: Google C++ Style Guide
-// COMENTARIOS: 
 
 #ifndef STACKL_H_
 #define STACKL_H_
